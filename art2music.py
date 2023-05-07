@@ -332,6 +332,16 @@ with ps1:
     st.markdown("### Pitch Shift Parameters")
     semitones   = st.slider('semitones', min_value=0.0, max_value=12.0, step=1.0, value=0.0) 
 
+th1,rt1 = st.columns(2) 
+#Compression Parameters
+#        Compressor(threshold_db=-50, ratio=25) #new pedalboard effect
+with th1:
+    st.markdown("### Compressor Parameters")
+    compressor_threshhold = st.slider('threshold', min_value=-100, max_value=0, step=0.1, value=0.0)  
+with rt1:
+#    st.markdown("### Compressor Parameters")
+    compressor_ratio   = st.slider('ratio', min_value=0.0, max_value=50.0, step=0.1, value=0.0) 
+
 # Making the required prediction
 if img2load is not None:
     # Saves
@@ -374,7 +384,7 @@ if img2load is not None:
         PitchShift(semitones = semitones),
         Chorus(rate_hz = rate_hz_chorus),
 #        Convolution("./guitar_amp.wav", 1.0) #new pedalboard effect
-        Compressor(threshold_db=-50, ratio=25) #new pedalboard effect
+        Compressor(threshold_db=compressor_threshhold, ratio=compressor_ratio) #new pedalboard effect
         ])
 
     # Run the audio through this pedalboard!
