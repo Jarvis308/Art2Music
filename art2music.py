@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import cv2
 import random
-from pedalboard import Pedalboard, Chorus, Reverb, Gain, LadderFilter,Phaser, Delay, PitchShift, Distortion
+from pedalboard import Pedalboard, Chorus, Reverb, Gain, LadderFilter,Phaser, Delay, PitchShift, Distortion, Compressor
 from pedalboard.io import AudioFile
 from PIL import Image
 from scipy.io import wavfile
@@ -337,10 +337,10 @@ th1,rt1 = st.columns(2)
 #        Compressor(threshold_db=-50, ratio=25) #new pedalboard effect
 with th1:
     st.markdown("### Compressor Parameters")
-    compressor_threshhold = st.slider('threshold', min_value=-100.0, max_value=0.0, step=0.1, value=0.0)  
+    compressor_threshhold = st.slider('threshold', min_value=-100.0, max_value=0.0, step=0.1, value=-50.0)  
 with rt1:
 #    st.markdown("### Compressor Parameters")
-    compressor_ratio   = st.slider('ratio', min_value=0.0, max_value=50.0, step=0.1, value=0.0) 
+    compressor_ratio   = st.slider('ratio', min_value=0.0, max_value=50.0, step=0.1, value=25.0) 
 
 # Making the required prediction
 if img2load is not None:
