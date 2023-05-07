@@ -337,7 +337,7 @@ th1,rt1 = st.columns(2)
 #        Compressor(threshold_db=-50, ratio=25) #new pedalboard effect
 with th1:
     st.markdown("### Compressor Parameters")
-    compressor_threshhold = st.slider('threshold', min_value=-100, max_value=0, step=0.1, value=0.0)  
+    compressor_threshhold = st.slider('threshold', min_value=-100.0, max_value=0.0, step=0.1, value=0.0)  
 with rt1:
 #    st.markdown("### Compressor Parameters")
     compressor_ratio   = st.slider('ratio', min_value=0.0, max_value=50.0, step=0.1, value=0.0) 
