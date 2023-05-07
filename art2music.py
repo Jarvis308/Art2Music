@@ -212,7 +212,8 @@ def img2music(img, scale = [220.00, 246.94 ,261.63, 293.66, 329.63, 349.23, 415.
 # Adding an appropriate title for the test website
 st.title("Making Music From Images")
 
-st.markdown("This little app converts an image into a song. Play around with the various inputs belows using different images!")
+# inserted a music note emoji using github markdown
+st.markdown("This little app converts an image into a song.:musical_note: Play around with the various inputs belows using different images!")
 #Making dropdown select box containing scale, key, and octave choices
 df1 = pd.DataFrame({'Scale_Choice': ['AEOLIAN', 'BLUES', 'PHYRIGIAN', 'CHROMATIC','DORIAN','HARMONIC_MINOR','LYDIAN','MAJOR','MELODIC_MINOR','MINOR','MIXOLYDIAN','NATURAL_MINOR','PENTATONIC']})
 df2 = pd.DataFrame({'Keys': ['A','a','B','C','c','D','d','E','F','f','G','g']})
@@ -371,7 +372,9 @@ if img2load is not None:
         Reverb(room_size = room_size, wet_level = wet_level, dry_level = dry_level, width = width),
         Phaser(rate_hz = rate_hz_phaser, depth = depth_phaser),
         PitchShift(semitones = semitones),
-        Chorus(rate_hz = rate_hz_chorus)
+        Chorus(rate_hz = rate_hz_chorus),
+#        Convolution("./guitar_amp.wav", 1.0) #new pedalboard effect
+        Compressor(threshold_db=-50, ratio=25) #new pedalboard effect
         ])
 
     # Run the audio through this pedalboard!
@@ -399,3 +402,16 @@ else:
     st.write("Waiting for an image to be uploaded...")
 #st.markdown("# Main page 🎈")
 #st.sidebar.markdown("# Main page 🎈")
+
+# Read in data from the Google Sheet.
+# Uses st.cache_data to only rerun when the query changes or after 10 min.
+@st.cache_data(ttl=600)
+def load_data(sheets_url):
+    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
+    return pd.read_csv(csv_url)
+
+df = load_data(st.secrets["public_gsheets_url"])
+
+# Print results.
+for row in df.itertuples():
+    st.write(f"{row.name} has a :{row.pet}:")
