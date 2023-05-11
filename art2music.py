@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on 4-14-2023
+Modified on 5-5-2023
 
 @author: jjblair
+@author2: JW-Arveseth
 """
 
 #Import necessary libraries
