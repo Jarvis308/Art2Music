@@ -3,4 +3,4 @@ A class project to convert pixel color data to sound frequencies. The program ap
 
 
 Based on the original project from Victor Murcia.
-Original Project --> https://victormurcia-making-music-from-images-music-to-images-ce4ydi.streamlitapp.com/
+--> https://victormurcia-making-music-from-images-music-to-images-ce4ydi.streamlitapp.com/
