@@ -300,7 +300,7 @@ with col12:
 #Convolution Parameters
 with col13:
     st.markdown("### Convolution")
-    conV = st.radio(options = ['OFF', 'ON'])
+    conV = st.radio('', ['OFF', 'ON'])
 
 st.markdown("### Reverb Parameters")
 rev1, rev2, rev3, rev4, rev5= st.columns(5)
