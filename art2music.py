@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 import cv2
 import random
-from pedalboard import Pedalboard, Chorus, Reverb, Gain, LadderFilter,Phaser, Delay, PitchShift, Distortion
+from pedalboard import Pedalboard, Chorus, Reverb, Gain, LadderFilter,Phaser, Delay, PitchShift, Distortion, Convolution
 from pedalboard.io import AudioFile
 from PIL import Image
 from scipy.io import wavfile
@@ -297,6 +297,11 @@ with col12:
     st.markdown("### Gain Parameters")
     gain_db = st.slider('gain_db', min_value=0.0, max_value=100.0, step=1.0, value=0.0) 
 
+#Convolution Parameters
+with col13:
+    st.markdown("### Convolution")
+    conV = st.radio(options = ['OFF', 'ON'])
+
 st.markdown("### Reverb Parameters")
 rev1, rev2, rev3, rev4, rev5= st.columns(5)
 #Reverb Parameters
@@ -368,6 +373,7 @@ if img2load is not None:
     board = Pedalboard([
         Gain(gain_db=gain_db),
         Distortion(drive_db=drive_db),
+        Convolution("./guitar_amp.wav", conV = conV),
         LadderFilter(mode=LadderFilter.Mode.HPF12, cutoff_hz=cutoff_hz,resonance = resonance_lad,drive=drive_lad),
         Delay(delay_seconds = delay_seconds),
         Reverb(room_size = room_size, wet_level = wet_level, dry_level = dry_level, width = width),
