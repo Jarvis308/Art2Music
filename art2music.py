@@ -300,7 +300,7 @@ with col12:
 #Convolution Parameters
 with col13:
     st.markdown("### Convolution")
-    conV = st.radio(options = ['OFF', 'ON'])
+    conV = st.radio('', ['OFF', 'ON'])
 
 st.markdown("### Reverb Parameters")
 rev1, rev2, rev3, rev4, rev5= st.columns(5)
@@ -373,7 +373,7 @@ if img2load is not None:
     board = Pedalboard([
         Gain(gain_db=gain_db),
         Distortion(drive_db=drive_db),
-        Convolution("./guitar_amp.wav", conV = conV),
+        Convolution("processed_song.wav", conV = conV),
         LadderFilter(mode=LadderFilter.Mode.HPF12, cutoff_hz=cutoff_hz,resonance = resonance_lad,drive=drive_lad),
         Delay(delay_seconds = delay_seconds),
         Reverb(room_size = room_size, wet_level = wet_level, dry_level = dry_level, width = width),
