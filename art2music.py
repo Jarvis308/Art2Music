@@ -407,10 +407,10 @@ if img2load is not None:
  # While no image is uploaded
 else:
     st.write("Waiting for an image to be uploaded...")
-#st.markdown("# Main page 🎈")
-#st.sidebar.markdown("# Main page 🎈")
+st.markdown("# Main page 🎈")
+st.sidebar.markdown("# Main page 🎈")
 
-# Read in data from the Google Sheet.
+'''# Read in data from the Google Sheet.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
 @st.cache_data(ttl=600)
 def load_data(sheets_url):
@@ -421,4 +421,6 @@ df = load_data(st.secrets["public_gsheets_url"])
 
 # Print results.
 for row in df.itertuples():
-    st.write(f"{row.name} has a :{row.pet}:")
+    st.write(f"{row.name} has a :{row.pet}:")'''
+#Ran out of time to get the
+#Google sheets working
