@@ -211,8 +211,8 @@ def img2music(img, scale = [220.00, 246.94 ,261.63, 293.66, 329.63, 349.23, 415.
     return song, pixels_df, harmony
 
 
-
-st.header("") 
+banner = "banner.jpeg"
+st.header.image(banner) 
 hide_st_style = """
             <style>
             footer {visibility: hidden;}
