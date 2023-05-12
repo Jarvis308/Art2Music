@@ -4,6 +4,14 @@ import numpy as np
 
 st.set_page_config(page_title="Plotting Demo", page_icon="📈")
 
+st.header("")
+hide_st_style = """
+            <style>
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+
 st.markdown("# Plotting Demo")
 st.sidebar.header("Plotting Demo")
 st.write(
