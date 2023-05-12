@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 import cv2
 import random
-from pedalboard import Pedalboard, Chorus, Reverb, Gain, LadderFilter,Phaser, Delay, PitchShift, Distortion, Convolution
+from pedalboard import Pedalboard, Chorus, Reverb, Gain, LadderFilter,Phaser, Delay, PitchShift, Distortion, Compressor
 from pedalboard.io import AudioFile
 from PIL import Image
 from scipy.io import wavfile
@@ -212,8 +212,9 @@ def img2music(img, scale = [220.00, 246.94 ,261.63, 293.66, 329.63, 349.23, 415.
 
 
 # Adding an appropriate title for the test website
-st.title("Making Music From Images")
+st.title(":musical_note: Making Music From Images")
 
+# inserted a music note emoji using github markdown
 st.markdown("This little app converts an image into a song. Play around with the various inputs belows using different images!")
 #Making dropdown select box containing scale, key, and octave choices
 df1 = pd.DataFrame({'Scale_Choice': ['AEOLIAN', 'BLUES', 'PHYRIGIAN', 'CHROMATIC','DORIAN','HARMONIC_MINOR','LYDIAN','MAJOR','MELODIC_MINOR','MINOR','MIXOLYDIAN','NATURAL_MINOR','PENTATONIC']})
@@ -276,7 +277,7 @@ with col8:
     n_pixels = st.slider('How many pixels to use? (More pixels take longer)', min_value=12, max_value=320, step=1, value=60)         
 #***Start Peadalboard Definitions*** 
 st.markdown("## Pedalboard")
-col9, col10, col11, col12, col13 = st.columns(5)
+col9, col10,col11,col12 = st.columns(4)
 #Chorus Parameters
 with col9:
     st.markdown("### Chorus Parameters")
@@ -296,11 +297,6 @@ with col11:
 with col12:
     st.markdown("### Gain Parameters")
     gain_db = st.slider('gain_db', min_value=0.0, max_value=100.0, step=1.0, value=0.0) 
-
-#Convolution Parameters
-with col13:
-    st.markdown("### Convolution")
-    conV = st.radio('', ['OFF', 'ON'])
 
 st.markdown("### Reverb Parameters")
 rev1, rev2, rev3, rev4, rev5= st.columns(5)
@@ -327,7 +323,7 @@ with lf3:
     drive_lad     = st.slider('drive', min_value=1.0, max_value=100.0, step=0.1, value=1.0)
 
 #st.markdown("### Phaser Parameters")
-ch1,ps1 = st.columns(2) 
+ch1, ps1, th1 = st.columns(3) 
 #Phaser Parameters
 with ch1:
     st.markdown("### Phaser Parameters")
@@ -337,6 +333,12 @@ with ch1:
 with ps1:
     st.markdown("### Pitch Shift Parameters")
     semitones   = st.slider('semitones', min_value=0.0, max_value=12.0, step=1.0, value=0.0) 
+
+#Compression Parameters
+with th1:
+    st.markdown("### Compressor Parameters") #Additional pedalboard effect
+    compressor_threshhold = st.slider('threshold', min_value=-100.0, max_value=0.0, step=0.1, value=-50.0)  
+    compressor_ratio = st.slider('ratio', min_value=0.0, max_value=50.0, step=0.1, value=25.0) 
 
 # Making the required prediction
 if img2load is not None:
@@ -373,13 +375,13 @@ if img2load is not None:
     board = Pedalboard([
         Gain(gain_db=gain_db),
         Distortion(drive_db=drive_db),
-        Convolution("processed_song.wav", conV = conV),
         LadderFilter(mode=LadderFilter.Mode.HPF12, cutoff_hz=cutoff_hz,resonance = resonance_lad,drive=drive_lad),
         Delay(delay_seconds = delay_seconds),
         Reverb(room_size = room_size, wet_level = wet_level, dry_level = dry_level, width = width),
         Phaser(rate_hz = rate_hz_phaser, depth = depth_phaser),
         PitchShift(semitones = semitones),
-        Chorus(rate_hz = rate_hz_chorus)
+        Chorus(rate_hz = rate_hz_chorus),
+        Compressor(threshold_db=compressor_threshhold, ratio=compressor_ratio) #new pedalboard effect
         ])
 
     # Run the audio through this pedalboard!
@@ -407,3 +409,16 @@ else:
     st.write("Waiting for an image to be uploaded...")
 #st.markdown("# Main page 🎈")
 #st.sidebar.markdown("# Main page 🎈")
+
+# Read in data from the Google Sheet.
+# Uses st.cache_data to only rerun when the query changes or after 10 min.
+@st.cache_data(ttl=600)
+def load_data(sheets_url):
+    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
+    return pd.read_csv(csv_url)
+
+df = load_data(st.secrets["public_gsheets_url"])
+
+# Print results.
+for row in df.itertuples():
+    st.write(f"{row.name} has a :{row.pet}:")
