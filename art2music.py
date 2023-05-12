@@ -89,7 +89,7 @@ def makeScale(whichOctave, whichKey, whichScale):
         freqs.append(freqToAdd)
     return freqs
 
-#Convery Hue value to a frequency
+#Convert Hue value to a frequency
 def hue2freq(h,scale_freqs):
     thresholds = [26 , 52 , 78 , 104,  128 , 154 , 180]
     #note = scale_freqs[0]
@@ -211,10 +211,20 @@ def img2music(img, scale = [220.00, 246.94 ,261.63, 293.66, 329.63, 349.23, 415.
     return song, pixels_df, harmony
 
 
+
+st.header() 
+hide_st_style = """
+            <style>
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 # Adding an appropriate title for the test website
 st.title(":musical_note: Making Music From Images")
-
 # inserted a music note emoji using github markdown
+
 st.markdown("This little app converts an image into a song. Play around with the various inputs belows using different images!")
 #Making dropdown select box containing scale, key, and octave choices
 df1 = pd.DataFrame({'Scale_Choice': ['AEOLIAN', 'BLUES', 'PHYRIGIAN', 'CHROMATIC','DORIAN','HARMONIC_MINOR','LYDIAN','MAJOR','MELODIC_MINOR','MINOR','MIXOLYDIAN','NATURAL_MINOR','PENTATONIC']})
@@ -276,7 +286,7 @@ with col8:
     #Ask user to select song duration
     n_pixels = st.slider('How many pixels to use? (More pixels take longer)', min_value=12, max_value=320, step=1, value=60)         
 #***Start Peadalboard Definitions*** 
-st.markdown("## Pedalboard")
+st.markdown("## Pedalboard :keyboard:")
 col9, col10,col11,col12 = st.columns(4)
 #Chorus Parameters
 with col9:
@@ -407,20 +417,23 @@ if img2load is not None:
  # While no image is uploaded
 else:
     st.write("Waiting for an image to be uploaded...")
-st.markdown("# Main page 🎈")
-st.sidebar.markdown("# Main page 🎈")
 
-'''# Read in data from the Google Sheet.
+
+# Read in data from the Google Sheet.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
-@st.cache_data(ttl=600)
-def load_data(sheets_url):
-    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
-    return pd.read_csv(csv_url)
+#st.markdown("# Main page 🎈")
+#st.sidebar.markdown("# Main page 🎈")
+#@st.cache_data(ttl=600)
+#def load_data(sheets_url):
+#    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
+#    return pd.read_csv(csv_url)
 
-df = load_data(st.secrets["public_gsheets_url"])
+#df = load_data(st.secrets["public_gsheets_url"])
 
 # Print results.
-for row in df.itertuples():
-    st.write(f"{row.name} has a :{row.pet}:")'''
-#Ran out of time to get the
+#for row in df.itertuples():
+#    st.write(f"{row.name} has a :{row.pet}:")
+
+# ^
+#I ran out of time to get the
 #Google sheets working
