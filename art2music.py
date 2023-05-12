@@ -212,7 +212,7 @@ def img2music(img, scale = [220.00, 246.94 ,261.63, 293.66, 329.63, 349.23, 415.
 
 
 
-st.header() 
+st.header("") 
 hide_st_style = """
             <style>
             footer {visibility: hidden;}
